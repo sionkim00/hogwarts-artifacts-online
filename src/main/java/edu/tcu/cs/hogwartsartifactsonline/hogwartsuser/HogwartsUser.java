@@ -14,16 +14,20 @@ public class HogwartsUser implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotEmpty(message="username is required.")
+    @NotEmpty(message = "username is required.")
     private String username;
 
-    @NotEmpty(message="password is required.")
+    @NotEmpty(message = "password is required.")
     private String password;
 
     private boolean enabled;
 
-    @NotEmpty(message="roles are required.")
-    private String roles;
+    @NotEmpty(message = "roles are required.")
+    private String roles; // Space separated string
+
+
+    public HogwartsUser() {
+    }
 
     public Integer getId() {
         return id;
