@@ -43,7 +43,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public Result findUserById(@PathVariable Integer userId) {
-        HogwartsUser foundHogwartsUser = this.userService.findById (userId);
+        HogwartsUser foundHogwartsUser = this.userService.findById(userId);
         UserDto userDto = this.userToUserDtoConverter.convert(foundHogwartsUser);
         return new Result(true, StatusCode.SUCCESS, "Find One Success", userDto);
     }

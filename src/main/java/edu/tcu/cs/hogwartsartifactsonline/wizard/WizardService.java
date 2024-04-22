@@ -13,6 +13,7 @@ import java.util.List;
 public class WizardService {
 
     private final WizardRepository wizardRepository;
+
     private final ArtifactRepository artifactRepository;
 
 
@@ -58,7 +59,7 @@ public class WizardService {
         Artifact artifactToBeAssigned = this.artifactRepository.findById(artifactId)
                 .orElseThrow(() -> new ObjectNotFoundException("artifact", artifactId));
 
-        // Find this wizard by Id fromm DB.
+        // Find this wizard by Id from DB.
         Wizard wizard = this.wizardRepository.findById(wizardId)
                 .orElseThrow(() -> new ObjectNotFoundException("wizard", wizardId));
 

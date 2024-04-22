@@ -3,14 +3,10 @@ package edu.tcu.cs.hogwartsartifactsonline.system;
 import edu.tcu.cs.hogwartsartifactsonline.artifact.Artifact;
 import edu.tcu.cs.hogwartsartifactsonline.artifact.ArtifactRepository;
 import edu.tcu.cs.hogwartsartifactsonline.hogwartsuser.HogwartsUser;
-import edu.tcu.cs.hogwartsartifactsonline.hogwartsuser.UserRepository;
 import edu.tcu.cs.hogwartsartifactsonline.hogwartsuser.UserService;
 import edu.tcu.cs.hogwartsartifactsonline.wizard.Wizard;
 import edu.tcu.cs.hogwartsartifactsonline.wizard.WizardRepository;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,6 +17,7 @@ public class DBDataInitializer implements CommandLineRunner {
     private final WizardRepository wizardRepository;
 
     private final UserService userService;
+
 
     public DBDataInitializer(ArtifactRepository artifactRepository, WizardRepository wizardRepository, UserService userService) {
         this.artifactRepository = artifactRepository;
@@ -82,7 +79,6 @@ public class DBDataInitializer implements CommandLineRunner {
         w3.setId(3);
         w3.setName("Neville Longbottom");
         w3.addArtifact(a5);
-        w3.addArtifact(a6);
 
         wizardRepository.save(w1);
         wizardRepository.save(w2);
@@ -116,4 +112,5 @@ public class DBDataInitializer implements CommandLineRunner {
         this.userService.save(u2);
         this.userService.save(u3);
     }
+
 }

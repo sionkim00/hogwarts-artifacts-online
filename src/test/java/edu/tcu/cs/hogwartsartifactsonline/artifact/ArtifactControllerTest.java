@@ -22,15 +22,13 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false) // Turn off Spring Security
 class ArtifactControllerTest {
 
     @Autowired
@@ -44,7 +42,7 @@ class ArtifactControllerTest {
 
     List<Artifact> artifacts;
 
-    @Value("${api.endpoint.base-url}")
+    @Value("${api.endpoint.base-url}") // Spring will go to application.yml to find the value and inject into this field.
     String baseUrl;
 
 
@@ -100,7 +98,7 @@ class ArtifactControllerTest {
     }
 
     @Test
-    void tesFindArtifactByIdSuccess() throws Exception {
+    void testFindArtifactByIdSuccess() throws Exception {
         // Given
         given(this.artifactService.findById("1250808601744904191")).willReturn(this.artifacts.get(0));
 
@@ -114,9 +112,9 @@ class ArtifactControllerTest {
     }
 
     @Test
-    void tesFindArtifactByIdNotFound() throws Exception {
+    void testFindArtifactByIdNotFound() throws Exception {
         // Given
-        given(this.artifactService.findById("1250808601744904191")).willThrow(new edu.tcu.cs.hogwartsartifactsonline.system.exception.ObjectNotFoundException("artifact", "1250808601744904191"));
+        given(this.artifactService.findById("1250808601744904191")).willThrow(new ObjectNotFoundException("artifact", "1250808601744904191"));
 
         // When and then
         this.mockMvc.perform(get(this.baseUrl + "/artifacts/1250808601744904191").accept(MediaType.APPLICATION_JSON))
@@ -211,7 +209,7 @@ class ArtifactControllerTest {
                 null);
         String json = this.objectMapper.writeValueAsString(artifactDto);
 
-        given(this.artifactService.update(eq("1250808601744904192"), Mockito.any(Artifact.class))).willThrow(new edu.tcu.cs.hogwartsartifactsonline.system.exception.ObjectNotFoundException("artifact", "1250808601744904192"));
+        given(this.artifactService.update(eq("1250808601744904192"), Mockito.any(Artifact.class))).willThrow(new ObjectNotFoundException("artifact", "1250808601744904192"));
 
         // When and then
         this.mockMvc.perform(put(this.baseUrl + "/artifacts/1250808601744904192").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
