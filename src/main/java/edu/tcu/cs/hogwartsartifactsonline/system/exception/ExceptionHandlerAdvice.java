@@ -14,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ExceptionHandlerAdvice {
+
     @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     Result handleObjectNotFoundException(ObjectNotFoundException ex) {
@@ -70,8 +72,15 @@ public class ExceptionHandlerAdvice {
         return new Result(false, StatusCode.FORBIDDEN, "No permission.", ex.getMessage());
     }
 
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    Result handleAccessDeniedException(NoHandlerFoundException ex) {
+        return new Result(false, StatusCode.NOT_FOUND, "This API endpoint is not found.", ex.getMessage());
+    }
+
     /**
      * Fallback handles any unhandled exceptions.
+     *
      * @param ex
      * @return
      */
@@ -80,4 +89,5 @@ public class ExceptionHandlerAdvice {
     Result handleOtherException(Exception ex) {
         return new Result(false, StatusCode.INTERNAL_SERVER_ERROR, "A server internal error occurs.", ex.getMessage());
     }
+
 }

@@ -10,8 +10,11 @@ import java.util.List;
 @Service
 @Transactional
 public class ArtifactService {
+
     private final ArtifactRepository artifactRepository;
+
     private final IdWorker idWorker;
+
 
     public ArtifactService(ArtifactRepository artifactRepository, IdWorker idWorker) {
         this.artifactRepository = artifactRepository;
@@ -19,8 +22,8 @@ public class ArtifactService {
     }
 
     public Artifact findById(String artifactId) {
-        return this.artifactRepository.findById(artifactId).
-                orElseThrow(() -> new ObjectNotFoundException("artifact", artifactId));
+        return this.artifactRepository.findById(artifactId)
+                .orElseThrow(() -> new ObjectNotFoundException("artifact", artifactId));
     }
 
     public List<Artifact> findAll() {
@@ -45,7 +48,8 @@ public class ArtifactService {
 
     public void delete(String artifactId) {
         this.artifactRepository.findById(artifactId)
-                .orElseThrow(() -> new ObjectNotFoundException("artifact",artifactId));
+                .orElseThrow(() -> new ObjectNotFoundException("artifact", artifactId));
         this.artifactRepository.deleteById(artifactId);
     }
+
 }
