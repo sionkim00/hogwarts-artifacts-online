@@ -10,3 +10,7 @@ spring:
 jpa:
   show-sql: true
 
+ai:
+  openai:
+    endpoint: ${AI_OPENAI_ENDPOINT:https://api.openai.com/v1/chat/completions} # env with default value
+    api-key: ${AI_OPENAI_API_KEY:YOUR_API_KEY} # env with default value
